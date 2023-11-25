@@ -1,11 +1,14 @@
 {
-  "name": "express-app",
-  "version": "1.0.0",
-  "description": "A simple express app",
-  "main": "index.js",
-  "scripts": {
-    "test": "test"
-  },
-  "author": "Nico Neiman",
-  "license": "ISC"
+	"name": "express-app",
+	"version": "1.0.0",
+	"description": "A simple express app",
+	"main": "index.js",
+	"scripts": {
+		"test": "test"
+	},
+	"author": "Nico Neiman",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.18.2"
+	}
 }
