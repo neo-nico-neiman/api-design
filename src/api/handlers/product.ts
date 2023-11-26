@@ -1,6 +1,6 @@
 import { prisma } from "../utils";
 
-export class ProductRoutes {
+export class ProductHandlers {
 	constructor() {}
 
 	async getProducts(req, res) {
@@ -30,7 +30,7 @@ export class ProductRoutes {
 		}
 	}
 
-	async createNewProduct(req, res) {
+	async createProduct(req, res) {
 		try {
 			const newProduct = await prisma.product.create({
 				data: {
@@ -41,9 +41,8 @@ export class ProductRoutes {
 				},
 			});
 
-			//
 			res.json({
-				data: { newProduct, message: "Product succesfully created" },
+				data: { newProduct },
 			});
 		} catch (error) {
 			res.status(500);
@@ -74,7 +73,7 @@ export class ProductRoutes {
 				where: { id: req.params.id, belongsToId: req.user.id },
 			});
 
-			res.json({ deleted });
+			res.json({ data: { deleted } });
 		} catch (error) {
 			res.status(500);
 			res.json({ error });
