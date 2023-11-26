@@ -1,8 +1,9 @@
 import { body } from "express-validator";
-import { handleBodyValidationErrors } from "../utils";
+import { handleBodyValidationErrors } from "./handle-body-validation-errors";
 
 const createCredentialsValidationChain = () =>
 	body(["username", "password"])
+		.isString()
 		.trim()
 		.notEmpty()
 		.escape()

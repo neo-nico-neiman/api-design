@@ -1,8 +1,6 @@
-import { handleBodyValidationErrors } from "../../utils";
 import { createJWT } from "../../utils/create-jwt";
 import { prisma } from "../../utils/db";
 import { hashPassword } from "../../utils/password";
-import { validationResult } from "express-validator";
 
 const signUp = async (req, res) => {
 	try {

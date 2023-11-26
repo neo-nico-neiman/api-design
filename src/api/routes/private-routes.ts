@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { body, validationResult } from "express-validator";
-import { handleBodyValidationErrors } from "../utils";
+import { body } from "express-validator";
+import { handleBodyValidationErrors } from "../middleware";
 
 const privateRoutes = Router();
 
@@ -11,7 +11,10 @@ privateRoutes.get("/product", (req, res) => {
 privateRoutes.get("/product/:id", () => {});
 privateRoutes.put(
 	"/product/:id",
-	[body("name").trim().notEmpty().escape(), handleBodyValidationErrors],
+	[
+		body("name").isString().trim().notEmpty().escape(),
+		handleBodyValidationErrors,
+	],
 	(req, res) => {
 		res.status(200);
 		res.json({ message: "time to update" });

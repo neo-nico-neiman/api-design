@@ -1,4 +1,3 @@
-import { handleBodyValidationErrors } from "../../utils";
 import { createJWT } from "../../utils/create-jwt";
 import { prisma } from "../../utils/db";
 import { isValidPassword } from "../../utils/password";
