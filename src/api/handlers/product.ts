@@ -10,7 +10,6 @@ export class ProductRoutes {
 				include: { products: true },
 			});
 
-			res.status(200);
 			res.json({ data: { products: user.products } });
 		} catch (error) {
 			res.status(500);
@@ -21,10 +20,9 @@ export class ProductRoutes {
 	async getProductById(req, res) {
 		try {
 			const product = await prisma.product.findUnique({
-				where: { id: req.params.id, belongsTo: req.user.id },
+				where: { id: req.params.id },
 			});
 
-			res.status(200);
 			res.json({ data: { product } });
 		} catch (error) {
 			res.status(500);
@@ -43,7 +41,7 @@ export class ProductRoutes {
 				},
 			});
 
-			res.status(200);
+			//
 			res.json({
 				data: { newProduct, message: "Product succesfully created" },
 			});
@@ -55,16 +53,15 @@ export class ProductRoutes {
 
 	async updateProduct(req, res) {
 		try {
-			const product = await prisma.product.update({
-				where: { id: req.params.id, belongsTo: req.user.id },
+			const updated = await prisma.product.update({
+				where: { id: req.params.id, belongsToId: req.user.id },
 				data: {
 					name: req.body.name,
 					updated_at: new Date(),
 				},
 			});
 
-			res.status(200);
-			res.json({ data: { product, message: "Product succesfully updated" } });
+			res.json({ data: { updated } });
 		} catch (error) {
 			res.status(500);
 			res.json({ error });
@@ -73,12 +70,11 @@ export class ProductRoutes {
 
 	async deleteProduct(req, res) {
 		try {
-			await prisma.product.delete({
-				where: { id: req.params.id },
+			const deleted = await prisma.product.delete({
+				where: { id: req.params.id, belongsToId: req.user.id },
 			});
 
-			res.status(200);
-			res.json({ message: "Product succesfully deleted" });
+			res.json({ deleted });
 		} catch (error) {
 			res.status(500);
 			res.json({ error });
