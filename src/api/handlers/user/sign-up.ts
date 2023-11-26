@@ -6,6 +6,18 @@ const signUp = async (req, res) => {
 	try {
 		const { username, password } = req.body;
 
+		const isExistingUsername = await prisma.user.findUnique({
+			where: { username },
+		});
+
+		if (isExistingUsername) {
+			res.status(409);
+			res.json({
+				message: "Username not available, please choose a different one.",
+			});
+			return;
+		}
+
 		const user = await prisma.user.create({
 			data: {
 				username: username,
