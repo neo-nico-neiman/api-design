@@ -1,3 +1,4 @@
+import { handleBodyValidationErrors } from "../../utils";
 import { createJWT } from "../../utils/create-jwt";
 import { prisma } from "../../utils/db";
 import { isValidPassword } from "../../utils/password";
@@ -9,7 +10,7 @@ const signIn = async (req, res) => {
 		const { username, password } = req.body;
 
 		const user = await prisma.user.findUnique({
-			where: { username: username },
+			where: { username },
 		});
 
 		if (!user) {

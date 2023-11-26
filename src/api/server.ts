@@ -2,7 +2,7 @@ import express from "express";
 import { privateRoutes, publicRoutes } from "./routes";
 import morgan from "morgan";
 import cors from "cors";
-import { tokenValidation, credentialsValidation } from "./middleware";
+import { tokenValidation } from "./middleware";
 
 const app = express();
 
