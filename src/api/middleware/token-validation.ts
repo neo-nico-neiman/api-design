@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const protectRoutes = (req, res, next) => {
+const tokenValidation = (req, res, next) => {
 	const bearer = req.headers.authorization;
 
 	if (!bearer) {
@@ -30,4 +30,4 @@ const protectRoutes = (req, res, next) => {
 	}
 };
 
-export { protectRoutes };
+export { tokenValidation };

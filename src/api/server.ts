@@ -1,8 +1,8 @@
 import express from "express";
-import router from "./router";
+import { privateRoutes, publicRoutes } from "./routes";
 import morgan from "morgan";
 import cors from "cors";
-import { protectRoutes } from "./middleware/auth/protect-routes";
+import { tokenValidation, credentialsValidation } from "./middleware";
 
 const app = express();
 
@@ -11,11 +11,8 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-	res.status(200);
-	res.json({ message: "hello" });
-});
+app.use("/", publicRoutes);
 
-app.use("/api", protectRoutes, router);
+app.use("/api", tokenValidation, privateRoutes);
 
 export default app;
