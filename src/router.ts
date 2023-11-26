@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/product", (_, res) => {
+router.get("/product", (req, res) => {
 	res.status(200);
 	res.json({ message: "hi señor" });
 });
