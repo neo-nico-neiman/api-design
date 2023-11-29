@@ -15,7 +15,7 @@ model User {
   username   String    @unique
   password   String
   created_at DateTime  @default(now())
-  updated_at DateTime
+  updated_at DateTime @updatedAt
   products   Product[]
 }
 
@@ -23,7 +23,7 @@ model Product {
   id          String   @id @default(uuid())
   name        String   @db.VarChar(255)
   created_at  DateTime @default(now())
-  updated_at  DateTime
+  updated_at  DateTime @updatedAt
   belongsToId String
   belongsTo   User     @relation(fields: [belongsToId], references: [id])
   updates   Update[]
@@ -40,7 +40,7 @@ enum UPDATE_STATUS {
 model UpdatePoint {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @default(now())
 
   name        String @db.VarChar(255)
   description String
@@ -52,7 +52,7 @@ model UpdatePoint {
 model Update {
   id         String        @id @default(uuid())
   created_at DateTime      @default(now())
-  updated_at DateTime
+  updated_at DateTime @updatedAt
   title      String
   body       String
   status     UPDATE_STATUS
