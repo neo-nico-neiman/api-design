@@ -3,7 +3,7 @@ import { prisma } from "../utils";
 export class ProductHandlers {
 	constructor() {}
 
-	async getProducts(req, res) {
+	async getProducts(req, res, next) {
 		try {
 			const user = await prisma.user.findUnique({
 				where: { username: req.user.username },
@@ -12,12 +12,11 @@ export class ProductHandlers {
 
 			res.json({ data: { products: user.products } });
 		} catch (error) {
-			res.status(500);
-			res.json({ error });
+			next(error);
 		}
 	}
 
-	async getProductById(req, res) {
+	async getProductById(req, res, next) {
 		try {
 			const product = await prisma.product.findUnique({
 				where: { id: req.params.id },
@@ -25,18 +24,15 @@ export class ProductHandlers {
 
 			res.json({ data: { product } });
 		} catch (error) {
-			res.status(500);
-			res.json({ error });
+			next(error);
 		}
 	}
 
-	async createProduct(req, res) {
+	async createProduct(req, res, next) {
 		try {
 			const newProduct = await prisma.product.create({
 				data: {
 					name: req.body.name,
-					created_at: new Date(),
-					updated_at: new Date(),
 					belongsToId: req.user.id as string,
 				},
 			});
@@ -45,12 +41,11 @@ export class ProductHandlers {
 				data: { newProduct },
 			});
 		} catch (error) {
-			res.status(500);
-			res.json({ error });
+			next(error);
 		}
 	}
 
-	async updateProduct(req, res) {
+	async updateProduct(req, res, next) {
 		try {
 			const updated = await prisma.product.update({
 				where: { id: req.params.id, belongsToId: req.user.id },
@@ -62,12 +57,11 @@ export class ProductHandlers {
 
 			res.json({ data: { updated } });
 		} catch (error) {
-			res.status(500);
-			res.json({ error });
+			next(error);
 		}
 	}
 
-	async deleteProduct(req, res) {
+	async deleteProduct(req, res, next) {
 		try {
 			const deleted = await prisma.product.delete({
 				where: { id: req.params.id, belongsToId: req.user.id },
@@ -75,8 +69,7 @@ export class ProductHandlers {
 
 			res.json({ data: { deleted } });
 		} catch (error) {
-			res.status(500);
-			res.json({ error });
+			next(error);
 		}
 	}
 }

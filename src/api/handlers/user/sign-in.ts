@@ -1,10 +1,11 @@
+import { ErrorType } from "../../entities/errors";
 import { createJWT } from "../../utils/create-jwt";
 import { prisma } from "../../utils/db";
 import { isValidPassword } from "../../utils/password";
 
 const genericErrorMessage = "Invalid credentials";
 
-const signIn = async (req, res) => {
+const signIn = async (req, res, next) => {
 	try {
 		const { username, password } = req.body;
 
@@ -13,26 +14,22 @@ const signIn = async (req, res) => {
 		});
 
 		if (!user) {
-			res.status(401);
-			res.json({ message: genericErrorMessage });
-			return;
+			throw new Error(genericErrorMessage);
 		}
 
 		const isValid = await isValidPassword(password, user.password);
 
 		if (!isValid) {
-			res.status(401);
-			res.json({ message: genericErrorMessage });
-			return;
+			throw new Error(genericErrorMessage);
 		}
 
 		const token = createJWT(user);
 		res.status(200);
 		res.json({ token, user });
 	} catch (e) {
-		console.log(e);
-		res.status(500);
-		res.json({ message: e });
+		// TODO check the error message from Prisma and add specificity to the error
+		e.type = ErrorType.INPUT;
+		next(e);
 	}
 };
 

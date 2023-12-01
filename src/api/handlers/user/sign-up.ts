@@ -1,8 +1,9 @@
+import { ErrorType } from "../../entities/errors";
 import { createJWT } from "../../utils/create-jwt";
 import { prisma } from "../../utils/db";
 import { hashPassword } from "../../utils/password";
 
-const signUp = async (req, res) => {
+const signUp = async (req, res, next) => {
 	try {
 		const { username, password } = req.body;
 
@@ -11,11 +12,7 @@ const signUp = async (req, res) => {
 		});
 
 		if (isExistingUsername) {
-			res.status(409);
-			res.json({
-				message: "Username not available, please choose a different one.",
-			});
-			return;
+			throw new Error("Username not available, please choose a different one.");
 		}
 
 		const user = await prisma.user.create({
@@ -32,9 +29,9 @@ const signUp = async (req, res) => {
 		res.status(200);
 		res.json({ token });
 	} catch (e) {
-		console.log(e);
-		res.status(500);
-		res.json({ message: e });
+		e.type = ErrorType.INPUT;
+
+		next(e);
 	}
 };
 
