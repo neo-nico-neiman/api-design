@@ -1,7 +1,17 @@
 import * as dotenv from "dotenv";
+import app from "./api/server";
+
 dotenv.config();
 
-import app from "./api/server";
+process.on("uncaughtException", (e) => {
+	//TODO  add tracing and logs
+	console.log(12, e);
+});
+
+process.on("unhandledRejection", (e) => {
+	//TODO  add tracing and logs
+	console.log(12, e);
+});
 
 const PORT = 3001;
 
