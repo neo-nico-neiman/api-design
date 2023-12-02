@@ -1,5 +1,7 @@
 import merge from "lodash.merge";
+import * as dotenv from "dotenv";
 
+dotenv.config();
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
 let envConfig;
@@ -11,7 +13,6 @@ if (process.env.NODE_ENV === "production") {
 } else {
 	envConfig = require("./local").default;
 }
-
 export default merge(
 	{
 		env: process.env.NODE_ENV,

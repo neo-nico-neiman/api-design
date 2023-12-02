@@ -19,7 +19,7 @@ const tokenValidation = (req, res, next) => {
 	}
 
 	try {
-		const payload = jwt.verify(token, config.secrets.JWT_SECRET);
+		const payload = jwt.verify(token, config.secrets.jwt);
 		req.user = payload;
 		console.log(payload);
 		next();

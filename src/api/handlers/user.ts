@@ -23,7 +23,6 @@ export class UserHandlers {
 			if (!isValid) {
 				throw new Error(genericErrorMessage);
 			}
-
 			const token = createJWT(user);
 			res.status(200);
 			res.json({ token, user });
