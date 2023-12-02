@@ -1,7 +1,5 @@
-import * as dotenv from "dotenv";
 import app from "./api/server";
-
-dotenv.config();
+import config from "./config";
 
 process.on("uncaughtException", (e) => {
 	//TODO  add tracing and logs
@@ -13,8 +11,6 @@ process.on("unhandledRejection", (e) => {
 	console.log(12, e);
 });
 
-const PORT = 3001;
-
-app.listen(PORT, () => {
-	console.log(`Server listening at port ${PORT}`);
+app.listen(config.port, () => {
+	console.log(`Server listening at port ${config.port}`);
 });

@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import config from "../../config";
 
 const tokenValidation = (req, res, next) => {
 	const bearer = req.headers.authorization;
@@ -18,7 +19,7 @@ const tokenValidation = (req, res, next) => {
 	}
 
 	try {
-		const payload = jwt.verify(token, process.env.JWT_SECRET);
+		const payload = jwt.verify(token, config.secrets.JWT_SECRET);
 		req.user = payload;
 		console.log(payload);
 		next();

@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
+import config from "../../config";
 
 const createJWT = (user) => {
 	const token = jwt.sign(
 		{ id: user.id, username: user.username },
-		process.env.JWT_SECRET
+		config.secrets.JWT_SECRET
 	);
 
 	return token;
