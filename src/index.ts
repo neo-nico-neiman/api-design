@@ -2,13 +2,11 @@ import app from "./api/server";
 import config from "./config";
 
 process.on("uncaughtException", (e) => {
-	//TODO  add tracing and logs
-	console.log(12, e);
+	console.log(e); //TODO  add tracing and logs
 });
 
 process.on("unhandledRejection", (e) => {
-	//TODO  add tracing and logs
-	console.log(12, e);
+	console.log(e); //TODO  add tracing and logs
 });
 
 app.listen(config.port, () => {
